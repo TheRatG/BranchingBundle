@@ -1,0 +1,25 @@
+{
+    "name": "therat/branching",
+    "description": "Symfony BranchingBundle. Auto change database depends on еру current git branch.",
+    "require": {
+        "symfony/dependency-injection": "2.6.*",
+        "symfony/process": "2.6.*",
+        "symfony/yaml": "2.6.*",
+        "doctrine/doctrine-bundle": "1.3.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir Pak",
+            "email": "the_rat_spam@mail.ru"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.6.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {"TheRat\\BranchingBundle\\": "src/"}
+    }
+}
