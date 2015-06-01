@@ -20,7 +20,7 @@ class SwitchDbNameCompiler implements CompilerPassInterface
             return;
         }
 
-        $helper = $container->get('therat.branching.helper.database');
+        $helper = $container->get('therat_branching.helper.database');
 
         $originalDbName = $container->getParameter('database_name');
         $branchDbName = $helper->generateDatabaseName();
