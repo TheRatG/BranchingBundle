@@ -22,6 +22,10 @@ class TheRatBranchingExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('therat_branching.switch_db', $config['switch_db']);
+        $container->setParameter('therat_branching.copy_db_data', $config['copy_db_data']);
+//        $container->setParameter('therat_branching.alter_increment_map', $config['alter_increment_map']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

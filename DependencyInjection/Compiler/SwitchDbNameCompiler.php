@@ -13,7 +13,7 @@ class SwitchDbNameCompiler implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->getParameter('therat.branching.switch_db')
+        if (!$container->getParameter('therat_branching.switch_db')
             || false === strpos($container->getParameter('database_driver'), 'mysql')
             || false == in_array($container->getParameter('kernel.environment'), ['dev', 'test'])
         ) {

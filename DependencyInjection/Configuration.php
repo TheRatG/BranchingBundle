@@ -2,6 +2,7 @@
 
 namespace TheRat\BranchingBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -18,11 +19,18 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('the_rat_branching');
+        $rootNode = $treeBuilder->root('therat_branching');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        /** @var ArrayNodeDefinition $rootNode */
+        $rootNode
+            ->children()
+                ->booleanNode('switch_db')
+                    ->defaultFalse()
+                ->end()
+                ->booleanNode('copy_db_data')
+                    ->defaultFalse()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
