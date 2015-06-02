@@ -1,0 +1,41 @@
+<?php
+namespace TheRat\BranchingBundle\DependencyInjection\Compiler;
+
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+class SwitchDbNameCompiler implements CompilerPassInterface
+{
+    /**
+     * You can modify the container here before it is dumped to PHP code.
+     *
+     * @param ContainerBuilder $container
+     */
+    public function process(ContainerBuilder $container)
+    {
+        if (!$container->getParameter('therat.branching.switch_db')
+            || false === strpos($container->getParameter('database_driver'), 'mysql')
+            || false == in_array($container->getParameter('kernel.environment'), ['dev', 'test'])
+        ) {
+            return;
+        }
+
+        $helper = $container->get('therat_branching.helper.database');
+
+        $originalDbName = $container->getParameter('database_name');
+        $branchDbName = $helper->generateDatabaseName();
+
+        $container->setParameter('database_name_original', $originalDbName);
+        if ($originalDbName != $branchDbName) {
+            if (!$helper->databaseExists($branchDbName)) {
+                $helper->generateDatabase($branchDbName);
+            }
+            $container->setParameter('database_name', $branchDbName);
+
+            $definition = $container->getDefinition('doctrine.dbal.default_connection');
+            $connectionParams = $definition->getArgument(0);
+            $connectionParams['dbname'] = $branchDbName;
+            $definition->replaceArgument(0, $connectionParams);
+        }
+    }
+}
