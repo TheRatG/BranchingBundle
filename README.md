@@ -8,7 +8,32 @@ Bundle version is connected with supported symfony version.
 
 ## Installation
 
+Download bundle by composer
+
 ```
 composer require therat/branching "2.6.*"
 ```
 
+Then, enable the bundle by adding the following line in the app/AppKernel.php file of your project:
+
+```php
+<?php
+// app/AppKernel.php
+
+// ...
+class AppKernel extends Kernel
+{
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+
+            new TheRat\BranchingBundle\TheRatBranchingBundle(),
+        );
+
+        // ...
+    }
+
+    // ...
+}
+```
