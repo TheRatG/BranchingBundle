@@ -13,19 +13,19 @@ class SwitchDbNameCompiler implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->getParameter('therat_branching.switch_db')
+        $originalDbName = $container->getParameter('database_name');
+        $container->setParameter('database_name_original', $originalDbName);
+
+        if (!$container->getParameter('the_rat_branching.switch_db')
             || false === strpos($container->getParameter('database_driver'), 'mysql')
             || false === in_array($container->getParameter('kernel.environment'), ['dev', 'test'])
         ) {
             return;
         }
 
-        $helper = $container->get('therat_branching.helper.database');
-
-        $originalDbName = $container->getParameter('database_name');
+        $helper = $container->get('the_rat_branching.helper.database');
         $branchDbName = $helper->generateDatabaseName();
 
-        $container->setParameter('database_name_original', $originalDbName);
         if ($originalDbName != $branchDbName) {
             if (!$helper->databaseExists($branchDbName)) {
                 $helper->generateDatabase($branchDbName);

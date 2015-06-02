@@ -1,8 +1,16 @@
 parameters:
-    therat_branching.helper.database.class: TheRat\BranchingBundle\Helper\Database
+    the_rat_branching.helper.database.class: TheRat\BranchingBundle\Helper\Database
 
 services:
-    therat_branching.helper.database:
-        class: %therat_branching.helper.database.class%
-        calls:
-            - [ setContainer, [ @service_container ] ]
+    the_rat_branching.helper.database:
+        class: %the_rat_branching.helper.database.class%
+        arguments:
+            - %kernel.root_dir%
+            - %the_rat_branching.copy_db_data%
+            - %database_driver%
+            - %database_host%
+            - %database_port%
+            - %database_user%
+            - %database_password%
+            - %database_name%
+            - %database_name_original%
