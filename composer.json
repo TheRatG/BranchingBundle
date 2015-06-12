@@ -2,9 +2,9 @@
     "name": "therat/branching",
     "description": "Symfony BranchingBundle. Auto change database depends on еру current git branch.",
     "require": {
-        "symfony/dependency-injection": "2.6.*",
-        "symfony/process": "2.6.*",
-        "symfony/yaml": "2.6.*"
+        "symfony/dependency-injection": "2.7.*",
+        "symfony/process": "2.7.*",
+        "symfony/yaml": "2.7.*"
     },
     "license": "MIT",
     "authors": [
