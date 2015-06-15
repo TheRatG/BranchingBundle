@@ -1,8 +1,0 @@
-parameters:
-    therat_branching.helper.database.class: TheRat\BranchingBundle\Helper\Database
-
-services:
-    therat_branching.helper.database:
-        class: %therat_branching.helper.database.class%
-        calls:
-            - [ setContainer, [ @service_container ] ]
