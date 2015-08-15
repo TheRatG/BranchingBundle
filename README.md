@@ -11,7 +11,7 @@ Bundle version is connected with supported symfony version.
 Download bundle by composer
 
 ```
-composer require therat/branching "2.6.*"
+composer require therat/branching
 ```
 
 Then, enable the bundle by adding the following line in the app/AppKernel.php file of your project:
