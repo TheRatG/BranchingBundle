@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('therat_branching');
+        $rootNode = $treeBuilder->root('the_rat_branching');
 
         /** @var ArrayNodeDefinition $rootNode */
         $rootNode
