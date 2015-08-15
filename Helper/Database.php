@@ -149,8 +149,7 @@ class Database
 
     public function generateDatabaseName()
     {
-        $cmd = 'cd ' . $this->getRootDir() . ' && git symbolic-ref HEAD';
-        $branchRef = exec($cmd);
+        $branchRef = Git::getCurrentBranch($this->getRootDir());
 
         $result = $this->getDbName();
         if (strpos($branchRef, 'refs/heads/') === 0) {

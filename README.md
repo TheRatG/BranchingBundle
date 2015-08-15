@@ -40,7 +40,6 @@ Create new branch `git branch feature` or `git checkout -b feature`.
 After that run 'app/console' command, and bundle create and copy new database automatically.
 
 > Be sure, that your mysql connect has privileges to create new scheme.
-
 > Bundle use default symfony connection params 'database_host' etc.
 
 ### Configuration
@@ -70,3 +69,17 @@ server {
     
     #...
 ```
+
+## Twig extensions
+
+### Current branch
+
+* Get current branch, useful for generating project title
+
+```
+#your twig template file
+
+{{ current_branch() }}
+```
+
+For master branch return `master (dev)` string.
