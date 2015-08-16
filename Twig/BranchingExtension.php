@@ -34,7 +34,7 @@ class BranchingExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'get_current_branch' => new \Twig_SimpleFunction('current_brunch', [$this, 'getCurrentBranch'])
+            'current_branch' => new \Twig_SimpleFunction('current_branch', [$this, 'getCurrentBranch'])
         ];
     }
 
