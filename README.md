@@ -79,7 +79,7 @@ server {
 ```
 #your twig template file
 
-{{ get_current_branch() }}
+{{ current_branch() }}
 ```
 
 For master branch return `master (dev)` string.
