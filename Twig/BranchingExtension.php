@@ -5,6 +5,7 @@ use TheRat\BranchingBundle\Helper\Git;
 
 class BranchingExtension extends \Twig_Extension
 {
+    const CURRENT_BRANCH = 'current_branch';
     /**
      * @var string
      */
@@ -34,7 +35,7 @@ class BranchingExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'current_branch' => new \Twig_SimpleFunction('current_branch', [$this, 'getCurrentBranch'])
+            self::CURRENT_BRANCH => new \Twig_SimpleFunction(self::CURRENT_BRANCH, [$this, 'getCurrentBranch'])
         ];
     }
 
