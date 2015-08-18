@@ -2,6 +2,9 @@
 namespace TheRat\BranchingBundle\Helper;
 
 use Doctrine\DBAL\DriverManager;
+use Monolog\Handler\NullHandler;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Process\Process;
 
 class Database
@@ -52,6 +55,32 @@ class Database
      * @var string
      */
     protected $dbNameOriginal;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @return Logger
+     */
+    public function getLogger()
+    {
+        if (null === $this->logger) {
+            $this->logger = new Logger(__CLASS__, [new NullHandler()]);
+        }
+        return $this->logger;
+    }
+
+    /**
+     * @param LoggerInterface|Logger $logger
+     * @return Database
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+        return $this;
+    }
 
     /**
      * @return string
@@ -150,13 +179,10 @@ class Database
     public function generateDatabaseName()
     {
         $branchRef = Git::getCurrentBranch($this->getRootDir());
-
         $result = $this->getDbName();
-        if (strpos($branchRef, 'refs/heads/') === 0) {
-            $branchName = $this->prepareBranchName(substr($branchRef, 11));
-            if ('master' != $branchName) {
-                $result = $result . '_branch_' . $branchName;
-            }
+        $branchName = $this->prepareBranchName($branchRef);
+        if ('master' != $branchName) {
+            $result = $result . '_branch_' . $branchName;
         }
         return $result;
     }
@@ -171,6 +197,10 @@ class Database
 
     public function generateDatabase($dstDbName)
     {
+        if (empty($dstDbName)) {
+            throw new \RuntimeException("Invalid param dstDbName, must be not empty");
+        }
+
         $connection = $this->getTmpConnection();
         $connection->getSchemaManager()->createDatabase($dstDbName);
 
@@ -183,7 +213,7 @@ class Database
 
             $cmd = "mysqldump -h{$host} {$port} -u{$user} $password {$srcDbName}" .
                 " | mysql -h{$host} ${port} -u{$user} {$password} {$dstDbName}";
-
+            $this->getLogger()->debug('Shell exec', ['cmd' => $cmd]);
             $process = new Process(
                 $cmd,
                 null,
